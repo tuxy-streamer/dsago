@@ -1,17 +1,17 @@
 package dsa
 
 // Singly Linked List
-type node[T comparable] struct {
-	element T
-	next    *node[T]
+type singlyNode[T comparable] struct {
+	value T
+	next  *singlyNode[T]
 }
 
 type SinglyLinkedList[T comparable] struct {
-	head *node[T]
-	tail *node[T]
+	head *singlyNode[T]
+	tail *singlyNode[T]
 }
 
-func (s *SinglyLinkedList[T]) len() int {
+func (s *SinglyLinkedList[T]) Len() int {
 	counter := 0
 	currentNode := s.head
 	for currentNode != nil {
@@ -21,7 +21,7 @@ func (s *SinglyLinkedList[T]) len() int {
 	return counter
 }
 
-func (s *SinglyLinkedList[T]) index(inputNode *node[T]) int {
+func (s *SinglyLinkedList[T]) Index(inputNode *singlyNode[T]) int {
 	counter := 0
 	currentNode := s.head
 	for currentNode != nil {
@@ -34,29 +34,29 @@ func (s *SinglyLinkedList[T]) index(inputNode *node[T]) int {
 	return counter
 }
 
-func swap[T comparable](firstNode, secondNode *node[T]) {
-	firstNode.element, secondNode.element = secondNode.element, firstNode.element
+func Swap[T comparable](firstNode, secondNode *singlyNode[T]) {
+	firstNode.value, secondNode.value = secondNode.value, firstNode.value
 }
 
-func (s *SinglyLinkedList[T]) previousNode(inputNode *node[T]) *node[T] {
+func (s *SinglyLinkedList[T]) PreviousNode(inputNode *singlyNode[T]) *singlyNode[T] {
 	currentNode := s.head
-	for range s.index(inputNode) - 1 {
+	for range s.Index(inputNode) - 1 {
 		currentNode = currentNode.next
 	}
 	return currentNode
 }
 
 // Insert
-func (s *SinglyLinkedList[T]) insertAtHead(element T) {
-	newNode := &node[T]{element: element, next: s.head}
+func (s *SinglyLinkedList[T]) InsertAtHead(value T) {
+	newNode := &singlyNode[T]{value: value, next: s.head}
 	s.head = newNode
 	if s.tail == nil {
 		s.tail = newNode
 	}
 }
 
-func (s *SinglyLinkedList[T]) insertAtTail(element T) {
-	newNode := &node[T]{element: element}
+func (s *SinglyLinkedList[T]) InsertAtTail(value T) {
+	newNode := &singlyNode[T]{value: value}
 	if s.tail != nil {
 		s.tail.next = newNode
 	}
@@ -66,20 +66,20 @@ func (s *SinglyLinkedList[T]) insertAtTail(element T) {
 	}
 }
 
-func (s *SinglyLinkedList[T]) insertAtIndex(element T, index int) {
+func (s *SinglyLinkedList[T]) InsertAtIndex(value T, index int) {
 	if index < 0 {
 		panic("index cannot be negative")
 	}
 	if index == 0 {
-		s.insertAtHead(element)
+		s.InsertAtHead(value)
 		return
 	}
-	if index > s.len() {
+	if index > s.Len() {
 		panic("index out of bounds")
 	}
-	newNode := &node[T]{
-		element: element,
-		next:    nil,
+	newNode := &singlyNode[T]{
+		value: value,
+		next:  nil,
 	}
 	currentNode := s.head
 	for i := 0; i < index-1; i++ {
@@ -93,31 +93,31 @@ func (s *SinglyLinkedList[T]) insertAtIndex(element T, index int) {
 }
 
 // Remove
-func (s *SinglyLinkedList[T]) removeHead() {
-	if s.len() == 0 {
+func (s *SinglyLinkedList[T]) RemoveHead() {
+	if s.Len() == 0 {
 		panic("Empty linked list")
 	}
 	s.head = s.head.next
 }
 
-func (s *SinglyLinkedList[T]) removeTail() {
+func (s *SinglyLinkedList[T]) RemoveTail() {
 	currentNode := s.head
 	nextNode := s.head.next
-	for range s.len() - 2 {
+	for range s.Len() - 2 {
 		currentNode = nextNode
 	}
 	s.tail = currentNode
 }
 
-func (s *SinglyLinkedList[T]) removeAtIndex(index int) {
+func (s *SinglyLinkedList[T]) RemoveAtIndex(index int) {
 	if index < 0 {
 		panic("index cannot be negative")
 	}
 	if index == 0 {
-		s.removeHead()
+		s.RemoveHead()
 		return
 	}
-	if index > s.len() {
+	if index > s.Len() {
 		panic("index out of bounds")
 	}
 	currentNode := s.head
@@ -131,7 +131,7 @@ func (s *SinglyLinkedList[T]) removeAtIndex(index int) {
 	currentNode.next = nextNode.next.next
 }
 
-func (s *SinglyLinkedList[T]) get(index int) *node[T] {
+func (s *SinglyLinkedList[T]) Get(index int) *singlyNode[T] {
 	currentNode := s.head
 	for range index {
 		currentNode = currentNode.next
@@ -139,11 +139,11 @@ func (s *SinglyLinkedList[T]) get(index int) *node[T] {
 	return s.head
 }
 
-func (s *SinglyLinkedList[T]) find(element T) int {
+func (s *SinglyLinkedList[T]) Find(value T) int {
 	currentNode := s.head
 	index := 0
 	for {
-		if currentNode.element == element {
+		if currentNode.value == value {
 			return index
 		}
 		currentNode = currentNode.next
@@ -151,14 +151,13 @@ func (s *SinglyLinkedList[T]) find(element T) int {
 	}
 }
 
-func (s *SinglyLinkedList[T]) reverse() {
+func (s *SinglyLinkedList[T]) Reverse() {
 	currentNode := s.head
-	var previousNode *node[T]
+	var previousNode *singlyNode[T]
 	for currentNode != nil {
 		nextNode := currentNode.next
 		currentNode.next = previousNode
 		previousNode = currentNode
 		currentNode = nextNode
-
 	}
 }
