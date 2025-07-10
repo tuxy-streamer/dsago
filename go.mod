@@ -1,3 +1,3 @@
-module github.com/tuxy-streamer/dsa-go
+module github.com/tuxy-streamer/dsago
 
 go 1.24.4
