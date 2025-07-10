@@ -1,4 +1,4 @@
-package dsa
+package dsago
 
 type Stack[T comparable] []T
 
@@ -8,7 +8,7 @@ func (s *Stack[T]) Size() int {
 
 func (s *Stack[T]) Pop() T {
 	lastElement := (*s)[len(*s)-1]
-	*s = (*s)[:len(*s)-1]
+	*s = (*s)[:s.Size()-1]
 	return lastElement
 }
 
@@ -17,9 +17,13 @@ func (s *Stack[T]) Push(element T) {
 }
 
 func (s *Stack[T]) Peek() T {
-	return (*s)[len(*s)-1]
+	if s.IsEmpty() {
+		var zero T
+		return zero
+	}
+	return (*s)[s.Size()-1]
 }
 
 func (s *Stack[T]) IsEmpty() bool {
-	return len(*s) != 0
+	return s.Size() == 0
 }

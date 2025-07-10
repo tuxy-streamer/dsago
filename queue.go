@@ -1,4 +1,4 @@
-package dsa
+package dsago
 
 type Queue[T comparable] []T
 

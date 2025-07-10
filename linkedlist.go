@@ -1,4 +1,4 @@
-package dsa
+package dsago
 
 // Singly Linked List
 type singlyNode[T comparable] struct {
